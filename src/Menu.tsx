@@ -3,6 +3,7 @@ import { useState } from "react";
 import Leaderboard from "./Leaderboard";
 import ProfilePage from "./ProfilePage";
 import {User, Trophy, BarChart, MenuIcon} from "lucide-react";
+import './Menu.css'
 
 function Menu() {
   const [activeTab, setActiveTab] = useState("Profile");

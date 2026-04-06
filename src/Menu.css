@@ -1,0 +1,45 @@
+.menuButton {
+  display: flex;              /* 🔥 important */
+  align-items: center;        /* vertical alignment */
+  gap: 10px;  
+
+  width: 100%;
+  padding: 10px;
+
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  background: transparent;
+}
+
+.menuButton:hover {
+  background: #444;
+}
+
+.active {
+  background: #555;
+}
+
+.menuSidebar {
+  display: flex;
+  flex-direction: column;
+  background: #333;
+  color: #fff;
+}
+
+.menuSidebar.closed {
+  width: 45px;
+  transition: .3s;
+}
+
+.menuSidebar.open {
+    
+  width: 220px;
+  transition: .3s;
+}
+
+.mainContent {
+  flex:1;
+  padding: 40px;
+}
