@@ -5,9 +5,9 @@ function MyAchievement() {
   return (
     <div className="achievement-page">
       <h1>My Achievements</h1>
-      <Achievement />
-      <Achievement />
-      <Achievement />
+      <Achievement key={1} title="title" description="Description" />
+      <Achievement key={2} title="Another Achievement" description="Another description" />
+      <Achievement key={3} title="Yet Another Achievement" description="Yet another description"    />
     </div>
   );
 }
@@ -16,9 +16,9 @@ function AchievementPage() {
   return (
     <div className="achievement-page">
       <h1>Achievements Page</h1>
-      <Achievement />
-      <Achievement />
-      <Achievement />
+      <Achievement key={1} title="title" description="Description" />
+      <Achievement key={2} title="Another Achievement" description="Another description" />
+      <Achievement key={3} title="Yet Another Achievement" description="Yet another description"    />
     </div>
   );
 }

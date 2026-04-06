@@ -24,7 +24,7 @@
 .menuSidebar {
   display: flex;
   flex-direction: column;
-  background: #333;
+  background: #1b1b1b;
   color: #fff;
 }
 
@@ -41,5 +41,4 @@
 
 .mainContent {
   flex:1;
-  padding: 40px;
 }
