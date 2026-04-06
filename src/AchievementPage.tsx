@@ -3,7 +3,7 @@ import Achievement from "./Achievement";
 function MyAchievement() {
   return (
     <div className="achievement-page">
-      <h1>Achievements</h1>
+      <h1>My Achievements</h1>
       <Achievement />
       <Achievement />
       <Achievement />
@@ -14,7 +14,7 @@ function MyAchievement() {
 function AchievementPage() {
   return (
     <div className="achievement-page">
-      <h1>Achievements</h1>
+      <h1>Achievements Page</h1>
       <Achievement />
       <Achievement />
       <Achievement />

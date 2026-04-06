@@ -1,11 +1,11 @@
-import {AchievementPage} from './AchievementPage'
+import Menu from './Menu'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <AchievementPage />
+      <Menu />
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
