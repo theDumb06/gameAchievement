@@ -7,7 +7,7 @@ import './Menu.css'
 
 function Menu() {
   const [activeTab, setActiveTab] = useState("Profile");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const renderComponent = () => {
     switch (activeTab) {

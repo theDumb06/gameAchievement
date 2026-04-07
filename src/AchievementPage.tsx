@@ -40,9 +40,9 @@ function AchievementSwitch() {
 
     return (
     <div>  
+{renderComponent()}
     <button onClick={() => {setActiveTab("myAchievements");}}> My Achievements</button>
     <button onClick={() => {setActiveTab("allAchievements");}}> All Achievement</button>
-{renderComponent()}
     </div>
 
 );
