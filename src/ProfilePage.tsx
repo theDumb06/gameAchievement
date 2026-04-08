@@ -1,5 +1,5 @@
-import "./Profile.css";
-import "./Achievement.css";
+import profile from "./Profile.module.css";
+import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
 import { useState } from "react";
@@ -19,7 +19,7 @@ const achievements = [
 
 function ProfileBanner() {
   return (
-    <div className="profile-banner">
+    <div className= {profile["profile-banner"]}>
       <ProfilePicture />
     </div>
   );
@@ -27,11 +27,11 @@ function ProfileBanner() {
 
 function ProfilePicture() {
   return (
-    <div className="profile-destails-container"> 
-    <div className="profile-picture">
+    <div className={profile["profile-destails-container"]}> 
+    <div className={profile["profile-picture"]}>
       <img src={heroImg} alt="Profile" />
     </div>
-    <div className="profile-name">
+    <div className={profile["profile-name"]}>
     <h2>Player Name</h2>
     <span>This is the players bio </span>
     <span>Level 42</span>
@@ -50,8 +50,8 @@ function MyAchievement() {
 
   return (
     <>
-      <div className="toggle-container">
-        <button className="toggle-button" onClick={toggleViewMode}>
+      <div className= {profile["toggle-container"]}>
+        <button className={profile["toggle-button"]} onClick={toggleViewMode}>
           {viewMode ? (
             <>
               <List size={20} />
@@ -65,8 +65,8 @@ function MyAchievement() {
           )}
         </button>
       </div>
-      <div className="scroll-content">
-        <div className={viewMode ? "grid-layout" : "list-layout"}>
+      <div className={profile["scroll-content"]}>
+        <div className={viewMode ? achievement["grid-layout"] : achievement["list-layout"]}>
           {achievements.map((ach) => (
             <Achievement
               key={ach.id}
@@ -82,12 +82,12 @@ function MyAchievement() {
 
 function ProfilePage() {
   return (
-    <div className="profile-page">
+    <div className= {profile["profile-page"]}>
       <ProfileBanner />
-      <div className="achievement-container">
+      <div className={profile["achievement-container"]}>
         <MyAchievement />
       </div>
-      <div className="bottom-div"> </div>
+      <div className={profile["bottom-div"]}> </div>
     </div>
   );
 }

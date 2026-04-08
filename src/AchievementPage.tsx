@@ -1,5 +1,6 @@
 import Achievement from "./Achievement";
-import "./AchievementPage.css";
+import achievementPage from "./AchievementPage.module.css";
+import achievement from "./Achievement.module.css";
 import { useState } from "react";
 
 const achievements = [
@@ -56,21 +57,25 @@ function SearchBar() {
   };
 
   return (
-    <div className="search-bar">
+    <div className={achievementPage["search-bar"]}>
       <input
         type="text"
         placeholder="Search achievements..."
         value={searchTerm}
         onChange={handleSearch}
       />
-      <button className="search-bar-button">Search</button>
+      <button className={achievementPage["search-bar-button"]}>Search</button>
     </div>
   );
 }
 
-function MyAchievement() {
+function MyAchievement(props: { viewMode: boolean }) {
   return (
-    <div className="grid-layout">
+    <div
+      className={
+        props.viewMode ? achievement["grid-layout"] : achievement["list-layout"]
+      }
+    >
       {achievements
         .filter((ach) => ach.completed)
 
@@ -85,9 +90,13 @@ function MyAchievement() {
   );
 }
 
-function AchievementPage() {
+function AchievementPage(props: { viewMode: boolean }) {
   return (
-    <div className="grid-layout">
+    <div
+      className={
+        props.viewMode ? achievement["grid-layout"] : achievement["list-layout"]
+      }
+    >
       {achievements.map((achievement) => (
         <Achievement
           key={achievement.id}
@@ -102,51 +111,68 @@ function AchievementPage() {
 function AchievementSwitch() {
   const [activeTab, setActiveTab] = useState("myAchievements");
 
+  const [viewMode, setViewMode] = useState(true);
+
+  const toggleViewMode = () => {
+    setViewMode(!viewMode);
+  };
+
   const renderComponent = () => {
     switch (activeTab) {
       case "myAchievements":
-        return <MyAchievement />;
+        return <MyAchievement viewMode={viewMode} />;
       case "allAchievements":
-        return <AchievementPage />;
+        return <AchievementPage viewMode={viewMode} />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="achievement-page">
+    <div className={achievementPage["achievement-page"]}>
       <SearchBar />
-      <div className="tab-container">
-      <button 
-      className="tab-button"
-      style={{
-            background: activeTab === "myAchievements" ? "#ee0000" : "transparent",
+      <div className={achievementPage["tab-container"]}>
+        <button
+          className={`${achievementPage["tab-button"]} ${activeTab === "myAchievements" ? achievementPage["active"] : ""}`}
+          onClick={() => {
+            setActiveTab("myAchievements");
           }}
-        onClick={() => {
-          setActiveTab("myAchievements");
-        }}
-      >
-        {" "}
-        My Achievements
-      </button>
-      <button
-      className="tab-button" style={{
-            background: activeTab === "allAchievements" ? "#ee0000" : "transparent",
+        >
+          {" "}
+          My Achievements
+        </button>
+        <button
+          className={`${achievementPage["tab-button"]} ${activeTab === "allAchievements" ? achievementPage["active"] : ""}`}
+          onClick={() => {
+            setActiveTab("allAchievements");
           }}
-        onClick={() => {
-          setActiveTab("allAchievements");
-        }}
-      >
-        {" "}
-        All Achievement
-      </button>
-      
-      
+        >
+          {" "}
+          All Achievement
+        </button>
+
+        <button
+          className={achievementPage["toggle-button"]}
+          onClick={toggleViewMode}
+        >
+          {viewMode ? (
+            <>
+              <span>List View</span>
+            </>
+          ) : (
+            <>
+              <span>Grid View</span>
+            </>
+          )}
+        </button>
       </div>
-      <div className="achievement-content">
-        {renderComponent()}
+      
+          <div className={achievementPage["achievement-content"]}>
+        <div className={achievementPage["scroll-content"]}>
+            {renderComponent()}
+          </div>
         </div>
-    </div>
+      </div>
   );
 }
 
