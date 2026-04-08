@@ -22,12 +22,11 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  transition: all 0.3s ease;
 }
 
 .list-layout {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: all 0.3s ease;
+
 }

@@ -1,4 +1,5 @@
 import Leaderboard from "./Leaderboard";
+
 function LeaderboardPage() {
   return (
     <div className="leaderboard-page">
