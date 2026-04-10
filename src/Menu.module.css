@@ -42,3 +42,8 @@
 .mainContent {
   flex:1;
 }
+
+.topBar{
+  display: flex;
+  flex-direction: row;
+}

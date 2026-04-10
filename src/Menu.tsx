@@ -3,7 +3,7 @@ import { useState } from "react";
 import Leaderboard from "./Leaderboard";
 import ProfilePage from "./ProfilePage";
 import {User, Trophy, BarChart, MenuIcon} from "lucide-react";
-import './Menu.css'
+import menuStyle from './Menu.module.css'
 
 function Menu() {
   const [activeTab, setActiveTab] = useState("Profile");
@@ -23,16 +23,17 @@ function Menu() {
   };
 
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div >
       {/* Sidebar */}
-      <div className={`menuSidebar ${open ? "open" : "closed"}`}>
+      <div className={menuStyle.topBar}>
+        {/* ` ${menuStyle["menuSidebar"] } ${open ? "open" : "closed"}` */}
         <button onClick={() => setOpen(!open)}
-            className="menuButton"
-            ><MenuIcon />{open && <span  className={`menuText ${open ? "show" : "hide"}`}>Menu</span>}</button>
+            className= {menuStyle["menuButton"]} 
+            ><MenuIcon />{open && <span  className={open ? "show" : "hide"}>Menu</span>}</button>
     
         <button
           onClick={() => setActiveTab("Profile")}
-          className="menuButton"
+          className={menuStyle["menuButton"]}
           style={{
             background: activeTab === "Profile" ? "#555" : "transparent",
           }}
@@ -42,7 +43,7 @@ function Menu() {
         </button>
         <button
           onClick={() => setActiveTab("Leaderboard")}
-          className="menuButton"
+          className= {menuStyle["menuButton"] }
           style={{
             background: activeTab === "Leaderboard" ? "#555" : "transparent",
           }}
@@ -53,7 +54,7 @@ function Menu() {
         </button>
         <button
           onClick={() => setActiveTab("Achievements")}
-          className="menuButton"
+          className= {menuStyle.menuButton}
           style={{
             background: activeTab === "Achievements" ? "#555" : "transparent",
           }}
@@ -62,8 +63,7 @@ function Menu() {
             {open && <span> Achievements</span>}
         </button>
       </div>
-      {/* Main Content */}
-      <div className="mainContent">{renderComponent()}</div>
+      <div className={menuStyle.mainContent}>{renderComponent()}</div>
     </div>
   );
 }
