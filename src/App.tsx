@@ -8,13 +8,13 @@ import PageBanner from "./PageBanner";
 function App() {
   let componentPage;
   switch (window.location.pathname) {
-    case "/":
+    case "/#/":
       componentPage = <Leaderboard />;
       break;
-    case "/profile":
+    case "/#/profile":
       componentPage = <ProfilePage />;
       break;
-    case "/achievements":
+    case "/#/achievements":
       componentPage = <AchievementSwitch />;
   }
 
