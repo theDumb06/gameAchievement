@@ -4,26 +4,20 @@ import Leaderboard from "./Leaderboard";
 import ProfilePage from "./ProfilePage";
 import AchievementSwitch from "./AchievementPage";
 import PageBanner from "./PageBanner";
+import { Routes, Route } from "react-router-dom"
 
 function App() {
-  let componentPage;
-  switch (window.location.pathname) {
-    case "/":
-      componentPage = <Leaderboard />;
-      break;
-    case "/profile":
-      componentPage = <ProfilePage />;
-      break;
-    case "/achievements":
-      componentPage = <AchievementSwitch />;
-  }
 
   return (
     <>
       <Menu />
       <PageBanner/>
       <div className={AppStyle.contentContainer}> 
-      {componentPage}
+      <Routes>
+          <Route path="/" element={<Leaderboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/achievements" element={<AchievementSwitch />} />
+        </Routes>
       </div>
     </>
   );
