@@ -1,7 +1,7 @@
 .menuButton {
-  display: flex;              /* 🔥 important */
-  align-items: center;        /* vertical alignment */
-  gap: 10px;  
+  display: flex; /* 🔥 important */
+  align-items: center; /* vertical alignment */
+  gap: 10px;
 
   width: 100%;
   padding: 10px;
@@ -30,20 +30,103 @@
 
 .menuSidebar.closed {
   width: 45px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .menuSidebar.open {
-    
   width: 220px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .mainContent {
-  flex:1;
+  display: flex;
+  flex: 1;
+  width: 1126px;
+  margin: 0 auto;
 }
 
-.topBar{
+.topBar {
   display: flex;
   flex-direction: row;
+}
+
+.navContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Keeps it above other elements */
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.788);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav {
+  /* Added properties */
+   width: 1126px;
+
+  color: #f85e00;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 2rem;
+  padding: 0 1rem;
+
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 15px;
+}
+
+.siteTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 2px solid rgb(0, 255, 42); */
+
+  padding: 0;
+  margin: 0;
+  gap: 1rem;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.nav li {
+  display: flex;
+  align-items: center;
+}
+
+.nav li.active {
+  background-color: #555;
+}
+
+.nav li:hover {
+  background-color: #777;
+}
+
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.topBannerBar {
+  width: 100%;
+  height: 50vh;
+  background-color: orange;
+}
+
+.topBannerBar image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Crops image to fill space without stretching */
+  object-position: center; /* Centers the image */
 }

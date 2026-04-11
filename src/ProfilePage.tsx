@@ -4,6 +4,7 @@ import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
 import { useState } from "react";
 import { Grid, List } from "lucide-react";
+import PageBanner from "./PageBanner";
 
 const achievements = [
   { id: 1, title: "First Win", description: "Won 1 match" },
