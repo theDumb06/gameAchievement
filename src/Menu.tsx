@@ -2,26 +2,27 @@ import {  LogIn} from "lucide-react";
 import menuStyle from "./Menu.module.css";
 import TitleImage from "./assets/Janken Arena Icon.webp";
 import JankenArenaIcon from "./assets/Janken Arena.webp";
+import { Link, useLocation } from "react-router-dom"
 
 function Menu() {
   return (
     <div className={menuStyle.navContainer}>
       <nav className={menuStyle.nav}>
         <li>
-          <a href="/#/" className={menuStyle.siteTitle}>
+          <CustomLink href="/" className={menuStyle.siteTitle}>
             <img src={TitleImage} alt="logo" />
             <img src={JankenArenaIcon} alt="logo" />
-          </a>
+          </CustomLink>
         </li>
         <ul>
-          <CustomLink href="/#/profile"> PROFILE</CustomLink>
-          <CustomLink href="/#/achievements"> ACHIEVEMENTS</CustomLink>
+          <CustomLink href="/profile"> PROFILE</CustomLink>
+          <CustomLink href="/achievements"> ACHIEVEMENTS</CustomLink>
         </ul>
         <li>
-          <a href="/#/login">
+          <CustomLink href="/login">
             LogIn
             <LogIn />
-          </a>
+          </CustomLink>
         </li>
       </nav>
     </div>
@@ -33,13 +34,13 @@ type CustomLinkProps = {
   children: React.ReactNode;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-function CustomLink({ href, children, ...props }: CustomLinkProps) {
-  const path = window.location.pathname;
+function CustomLink({ href, children}: CustomLinkProps) {
+  const path = useLocation();
   return (
-    <li className={path === href ? menuStyle.active : ""}>
-      <a href={href} {...props}>
+    <li className={path.pathname === href ? menuStyle.active : ""}>
+      <Link to={href}>
         {children}
-      </a>
+      </Link>
     </li>
   );
 }
