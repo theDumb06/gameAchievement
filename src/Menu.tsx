@@ -34,7 +34,7 @@ type CustomLinkProps = {
   children: React.ReactNode;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-function CustomLink({ href, children, ...props }: CustomLinkProps) {
+function CustomLink({ href, children}: CustomLinkProps) {
   const path = useLocation();
   return (
     <li className={path.pathname === href ? menuStyle.active : ""}>
