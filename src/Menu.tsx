@@ -1,4 +1,4 @@
-import { User, Trophy, LogIn, Dot } from "lucide-react";
+import {  LogIn} from "lucide-react";
 import menuStyle from "./Menu.module.css";
 import TitleImage from "./assets/Janken Arena Icon.webp";
 import JankenArenaIcon from "./assets/Janken Arena.webp";

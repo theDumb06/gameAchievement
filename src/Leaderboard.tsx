@@ -1,6 +1,5 @@
 import LeaderboardEntry from "./LeaderboardEntry";
 import LeaderboardStyle from "./Leaderboard.module.css";
-import heroImg from "./assets/react.svg";
 
 import { useState } from "react";
 
