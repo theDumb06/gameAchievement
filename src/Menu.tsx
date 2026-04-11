@@ -8,17 +8,17 @@ function Menu() {
     <div className={menuStyle.navContainer}>
       <nav className={menuStyle.nav}>
         <li>
-          <a href="/#/" className={menuStyle.siteTitle}>
+          <a href="/" className={menuStyle.siteTitle}>
             <img src={TitleImage} alt="logo" />
             <img src={JankenArenaIcon} alt="logo" />
           </a>
         </li>
         <ul>
-          <CustomLink href="/#/profile"> PROFILE</CustomLink>
-          <CustomLink href="/#/achievements"> ACHIEVEMENTS</CustomLink>
+          <CustomLink href="/profile"> PROFILE</CustomLink>
+          <CustomLink href="/achievements"> ACHIEVEMENTS</CustomLink>
         </ul>
         <li>
-          <a href="/#/login">
+          <a href="/login">
             LogIn
             <LogIn />
           </a>
