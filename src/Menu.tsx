@@ -3,10 +3,24 @@ import menuStyle from "./Menu.module.css";
 import TitleImage from "./assets/Janken Arena Icon.webp";
 import JankenArenaIcon from "./assets/Janken Arena.webp";
 import { Link, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 function Menu() {
+  const [hide, setHide] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHide(window.scrollY > lastScrollY.current);
+      lastScrollY.current = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className={menuStyle.navContainer}>
+    <div className={`${menuStyle.navContainer} ${hide? menuStyle.hide: menuStyle.show}`}>
       <nav className={menuStyle.nav}>
         <ul>
           <CustomLink href="/" className={menuStyle.siteTitle}>
