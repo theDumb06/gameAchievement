@@ -1,7 +1,7 @@
 import { LogIn } from "lucide-react";
 import menuStyle from "./Menu.module.css";
-import TitleImage from "./assets/Janken Arena Icon.webp";
-import JankenArenaIcon from "./assets/Janken Arena.webp";
+import TitleImage from "./assets/Janken Arena Icon.svg";
+import JankenArenaIcon from "./assets/Janken Arena.svg";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
@@ -20,12 +20,24 @@ function Menu() {
   }, []);
 
   return (
-    <div className={`${menuStyle.navContainer} ${hide? menuStyle.hide: menuStyle.show}`}>
+    <div
+      className={`${menuStyle.navContainer} ${hide ? menuStyle.hide : menuStyle.show}`}
+    >
       <nav className={menuStyle.nav}>
         <ul>
-          <CustomLink href="/" className={menuStyle.siteTitle}>
-            <img src={TitleImage} alt="logo" />
-            <img src={JankenArenaIcon} alt="logo" />
+          <CustomLink href="/" >
+            <div className={menuStyle.siteTitle}> 
+              <img
+                className={menuStyle.titleLogo}
+                src={TitleImage}
+                alt="logo"
+              />
+              <img
+                className={menuStyle.title}
+                src={JankenArenaIcon}
+                alt="logo"
+              />
+            </div>
           </CustomLink>
         </ul>
         <ul>
