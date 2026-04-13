@@ -130,7 +130,10 @@ function AchievementSwitch() {
 
   return (
     <div className={achievementPage["achievement-page"]}>
-      <SearchBar />
+      <div className={achievementPage.searchBarContainer}>
+        <SearchBar />
+        </div>
+      
       <div className={achievementPage["tab-container"]}>
         <button
           className={`${achievementPage["tab-button"]} ${activeTab === "myAchievements" ? achievementPage["active"] : ""}`}
@@ -138,8 +141,8 @@ function AchievementSwitch() {
             setActiveTab("myAchievements");
           }}
         >
-          {" "}
-          My Achievements
+          <h4>MY ACHIEVEMENTS</h4> 
+          
         </button>
         <button
           className={`${achievementPage["tab-button"]} ${activeTab === "allAchievements" ? achievementPage["active"] : ""}`}
@@ -147,8 +150,7 @@ function AchievementSwitch() {
             setActiveTab("allAchievements");
           }}
         >
-          {" "}
-          All Achievement
+          <h4>ALL ACHIEVEMENTS</h4> 
         </button>
 
         <button
@@ -166,6 +168,7 @@ function AchievementSwitch() {
           )}
         </button>
       </div>
+      
       
           <div className={achievementPage["achievement-content"]}>
         <div className={achievementPage["scroll-content"]}>

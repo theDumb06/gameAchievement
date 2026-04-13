@@ -1,10 +1,13 @@
 import banner from "./assets/Background.webp";
-import menuStyle from "./Menu.module.css"
+import menuStyle from "./Menu.module.css";
 
 function PageBanner() {
   return (
     <div className={menuStyle.topBannerBar}>
-      <img src={banner} alt="" />
+      <div className={menuStyle.imageContainer}>
+        <img src={banner} alt="" />
+        
+      </div>
     </div>
   );
 }

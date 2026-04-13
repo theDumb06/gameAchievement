@@ -1,4 +1,17 @@
 :root {
+  /* my variables */
+  --background-content-color :  #000000;
+  --background-component-color: #301200;
+  --background-component-color1:  #642600;
+  --background-component1-color: #553c10;
+  --main-color: #f85e00;
+  --text-color: #f0eaff;
+  --header-color: #FF9858;
+
+
+
+
+/* ---------------------- */
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;

@@ -100,14 +100,16 @@
 .nav li {
   display: flex;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav li.active {
-  background-color: #555;
+  background-color: var(--background-component-color1);
 }
 
 .nav li:hover {
-  background-color: #777;
+  background-color: var(--header-color);
 }
 
 .nav ul {
@@ -121,12 +123,20 @@
 .topBannerBar {
   width: 100%;
   height: 50vh;
-  background-color: orange;
+
 }
 
-.topBannerBar image {
+.imageContainer{
+  height: 100vh;
+  position:relative;
+  z-index: -1;
+}
+.imageContainer img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Crops image to fill space without stretching */
   object-position: center; /* Centers the image */
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+  mask-image: linear-gradient(to bottom, black, transparent);
+  
 }

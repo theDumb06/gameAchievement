@@ -1,11 +1,12 @@
+
 .profile-banner {
   width: 100%;
   height: 200px;
-  background-color: #333;
+  background-color: var(--background-component-color );
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: white;
+  color:var(--text-color);
   font-size: 100px;
   border-radius: 10px;
   position: relative; /* Required for absolute positioning of children */
@@ -27,7 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-color);
   font-size: 24px;
   border: 4px solid #333;
 }
@@ -35,10 +36,9 @@
 .profile-name {
 display: flex;
 flex-direction: column;
-  background-color: transparent;
    align-items: flex-start; 
   justify-content: center;
-  color: white;
+  color:var(--text-color);
   font-size: 15px;
   margin: 0;
 }
@@ -53,6 +53,7 @@ flex-direction: column;
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
  .achievement-container {
@@ -60,6 +61,7 @@ flex: 1;
 display: flex ;
 flex-direction: column;
 overflow: hidden;
+border-radius: 10px;
 }
 .bottom-div {
   height: 50px;
@@ -70,6 +72,10 @@ overflow: hidden;
 .scroll-content {   
 flex : 1;
 overflow-y: auto;
+background-color:var(--background-component-color );
+padding: 10px;
+border-radius: 10px;
+scrollbar-width: none;
 }
 
 
@@ -79,8 +85,8 @@ overflow-y: auto;
   gap: 10px;
 
   padding: 10px 10px;
-  background-color: #696969;
-  color: white;
+  background-color:var(--background-component-color1 );
+  color: var(--text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
