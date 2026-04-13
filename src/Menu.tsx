@@ -64,7 +64,7 @@ type CustomLinkProps = {
 function CustomLink({ href, children }: CustomLinkProps) {
   const path = useLocation();
   return (
-    <li className={path.pathname === href ? menuStyle.active : ""}>
+    <li className={path.pathname === href && path.pathname !== "/" ? menuStyle.active : ""}>
       <Link to={href}>{children}</Link>
     </li>
   );
