@@ -14,7 +14,7 @@ function Entry(entryData: LeaderboardEntryProps) {
         <h2>{entryData.rank}</h2>
       </div>
       <h2>{entryData.title}</h2>
-      <p>{entryData.description}</p>
+      <h3>{entryData.description}</h3>
     </div>
   );
 }

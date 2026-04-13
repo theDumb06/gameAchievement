@@ -16,10 +16,9 @@ const achievements = [
   { id: 8, title: "Team Player", description: "Won a team match" },
 ];
 
-
 function ProfileBanner() {
   return (
-    <div className= {profile["profile-banner"]}>
+    <div className={profile["profile-banner"]}>
       <ProfilePicture />
     </div>
   );
@@ -27,19 +26,18 @@ function ProfileBanner() {
 
 function ProfilePicture() {
   return (
-    <div className={profile["profile-destails-container"]}> 
-    <div className={profile["profile-picture"]}>
-      <img src={heroImg} alt="Profile" />
-    </div>
-    <div className={profile["profile-name"]}>
-    <h2>Player Name</h2>
-    <span>This is the players bio </span>
-    <span>Level 42</span>
-    </div>
+    <div className={profile["profile-destails-container"]}>
+      <div className={profile["profile-picture"]}>
+        <img src={heroImg} alt="Profile" />
+      </div>
+      <div className={profile["profile-name"]}>
+        <h2>Player Name</h2>
+        <span>This is the players bio </span>
+        <span>Level 42</span>
+      </div>
     </div>
   );
 }
-
 
 function MyAchievement() {
   const [viewMode, setViewMode] = useState(true);
@@ -50,7 +48,7 @@ function MyAchievement() {
 
   return (
     <>
-      <div className= {profile["toggle-container"]}>
+      <div className={profile["toggle-container"]}>
         <button className={profile["toggle-button"]} onClick={toggleViewMode}>
           {viewMode ? (
             <>
@@ -66,7 +64,11 @@ function MyAchievement() {
         </button>
       </div>
       <div className={profile["scroll-content"]}>
-        <div className={viewMode ? achievement["grid-layout"] : achievement["list-layout"]}>
+        <div
+          className={
+            viewMode ? achievement["grid-layout"] : achievement["list-layout"]
+          }
+        >
           {achievements.map((ach) => (
             <Achievement
               key={ach.id}
@@ -82,7 +84,7 @@ function MyAchievement() {
 
 function ProfilePage() {
   return (
-    <div className= {profile["profile-page"]}>
+    <div className={profile["profile-page"]}>
       <ProfileBanner />
       <div className={profile["achievement-container"]}>
         <MyAchievement />

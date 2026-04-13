@@ -1,12 +1,12 @@
 .achievement {
-  background-color: #696969;
+  background-color: var(--background-component-color1 );
   border-radius: 10px;
   padding: 20px;
   margin: 0px 0px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
+  color: var(--text-color)
 }
 .achievement-list {
   display: grid;
