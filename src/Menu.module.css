@@ -90,13 +90,18 @@
 
 .siteTitle {
   display: flex;
-  align-items: center;
-  justify-content: center;
   /* border: 2px solid rgb(0, 255, 42); */
+  gap: 10px;
+}
+.siteTitle img {
+  display: block;
+}
 
-  padding: 0;
-  margin: 0;
-  gap: 1rem;
+.title, .titleLogo{
+   width: auto; 
+  height: 50px;
+  object-fit: contain; /* Crops image to fill space without stretching */
+  object-position: center;
 }
 
 .nav a {
@@ -149,3 +154,5 @@
   -webkit-mask-image: linear-gradient(to bottom, black, transparent);
   mask-image: linear-gradient(to bottom, black, transparent);
 }
+
+
