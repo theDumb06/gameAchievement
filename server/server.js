@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const User = require("./User");
+
 require("dotenv").config({ path: "./config.env" });
 
 const app = express();
@@ -83,3 +85,22 @@ app.get("/achievements/:userId", async (req, res) => {
 });
 
 
+app.post("/register", async (req, res) => {
+    
+  try {
+    console.log("Received registration data:");
+    const { username, email, password } = req.body;
+
+    const user = new User({
+      username,
+      email,
+      password
+    });
+
+    await user.save();
+
+    res.json({ message: "User created!", user });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
