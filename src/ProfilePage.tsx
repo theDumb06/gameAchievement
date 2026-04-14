@@ -2,19 +2,8 @@ import profile from "./Profile.module.css";
 import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Grid, List } from "lucide-react";
-
-const achievements = [
-  { id: 1, title: "First Win", description: "Won 1 match" },
-  { id: 2, title: "Speedster", description: "Won in under 5 mins" },
-  { id: 3, title: "Unstoppable", description: "Won 10 matches in a row" },
-  { id: 4, title: "Collector", description: "Collected 100 items" },
-  { id: 5, title: "Explorer", description: "Visited all locations" },
-  { id: 6, title: "Master", description: "Reached max level" },
-  { id: 7, title: "Strategist", description: "Won with a unique strategy" },
-  { id: 8, title: "Team Player", description: "Won a team match" },
-];
 
 function ProfileBanner() {
   return (
@@ -41,10 +30,36 @@ function ProfilePicture() {
 
 function MyAchievement() {
   const [viewMode, setViewMode] = useState(true);
+  const [achievements, setAchievements] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        // Fetch achievements for a specific user (replace 'user123' with dynamic user ID if available)
+        const response = await fetch('http://localhost:5000/achievements/user123');
+        if (!response.ok) {
+          throw new Error('Failed to fetch achievements');
+        }
+        const data = await response.json();
+        setAchievements(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAchievements();
+  }, []);
 
   const toggleViewMode = () => {
     setViewMode(!viewMode);
   };
+
+  if (loading) return <div>Loading achievements...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -71,7 +86,7 @@ function MyAchievement() {
         >
           {achievements.map((ach) => (
             <Achievement
-              key={ach.id}
+              key={ach._id} // Use _id from MongoDB
               title={ach.title}
               description={ach.description}
             />
