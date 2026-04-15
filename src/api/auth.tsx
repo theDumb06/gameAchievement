@@ -7,7 +7,7 @@ export interface RegisterData {
 }
 
 export async function registerUser(data: RegisterData) {
-  const response = await fetch("http://localhost:5000/register", {
+  const response = await fetch("https://your-app.onrender.com/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
