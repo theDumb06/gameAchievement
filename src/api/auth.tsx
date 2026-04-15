@@ -7,7 +7,7 @@ export interface RegisterData {
 }
 
 export async function registerUser(data: RegisterData) {
-  const response = await fetch("https://your-app.onrender.com/register", {
+  const response = await fetch("https://my-app-backend-8hja.onrender.com/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -15,9 +15,11 @@ export async function registerUser(data: RegisterData) {
     body: JSON.stringify(data),
   });
 
+  const result = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to register");
+    throw new Error(result.message || "Failed to register");
   }
 
-  return response.json();
+  return result;
 }
