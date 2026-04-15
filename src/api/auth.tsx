@@ -44,3 +44,15 @@ export async function login(email: string, password: string) {
 
   return data;
 }
+
+export async function getMe() {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("https://my-app-backend-8hja.onrender.com/me", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return res.json();
+}
