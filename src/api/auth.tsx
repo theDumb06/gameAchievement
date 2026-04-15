@@ -23,3 +23,24 @@ export async function registerUser(data: RegisterData) {
 
   return result;
 }
+
+export async function login(email: string, password: string) {
+  const res = await fetch("https://my-app-backend-8hja.onrender.com/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  // Save token
+  localStorage.setItem("token", data.token);
+
+  return data;
+}
