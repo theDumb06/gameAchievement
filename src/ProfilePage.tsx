@@ -2,13 +2,21 @@ import profile from "./Profile.module.css";
 import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getMe } from "./api/auth";
 import { Grid, List } from "lucide-react";
 
 type AchievementItem = {
   id: number;
   title: string;
   description: string;
+};
+
+type User = {
+  username: string;
+  email: string;
+  achievements: AchievementItem[];
+  bio?: string;
 };
 
 const achievements: AchievementItem[] = [
@@ -22,23 +30,23 @@ const achievements: AchievementItem[] = [
   { id: 8, title: "Team Player", description: "Won a team match" },
 ];
 
-function ProfileBanner() {
+function ProfileBanner({ user }: { user: User }) {
   return (
     <div className={profile["profile-banner"]}>
-      <ProfilePicture />
+      <ProfilePicture user={user} />
     </div>
   );
 }
 
-function ProfilePicture() {
+function ProfilePicture({ user }: { user: User }) {
   return (
     <div className={profile["profile-destails-container"]}>
       <div className={profile["profile-picture"]}>
         <img src={heroImg} alt="Profile" />
       </div>
       <div className={profile["profile-name"]}>
-        <h2>Player Name</h2>
-        <span>This is the players bio </span>
+        <h2>{user.username}</h2>
+        <span>{user.bio || "This is the player's bio"}</span>
         <span>Level 42</span>
       </div>
     </div>
@@ -89,9 +97,35 @@ function MyAchievement() {
 }
 
 function ProfilePage() {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getMe();
+        setUser(userData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading || !user) {
+    return <h1>Loading profile...</h1>;
+  }
+
+  if (!user) {
+    return <h1>Failed to load profile</h1>;
+  }
+
   return (
     <div className={profile["profile-page"]}>
-      <ProfileBanner />
+      <ProfileBanner user={user} />
       <div className={profile["achievement-container"]}>
         <MyAchievement />
       </div>

@@ -7,13 +7,16 @@ export interface RegisterData {
 }
 
 export async function registerUser(data: RegisterData) {
-  const response = await fetch("https://my-app-backend-8hja.onrender.com/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    "https://my-app-backend-8hja.onrender.com/register",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
-  });
+  );
 
   const result = await response.json();
 
@@ -28,15 +31,24 @@ export async function login(email: string, password: string) {
   const res = await fetch("https://my-app-backend-8hja.onrender.com/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
   });
 
-  const data = await res.json();
+  const text = await res.text();
+  
+  let data;
+
+  try {
+    data = JSON.parse(text);
+  } catch (err) {
+    console.error("Invalid JSON from server:", text);
+    throw new Error("Server error");
+  }
 
   if (!res.ok) {
-    throw new Error(data.message);
+    throw new Error(data.message || "Login failed");
   }
 
   // Save token
@@ -54,5 +66,13 @@ export async function getMe() {
     }
   });
 
-  return res.json();
+  const text = await res.text(); // 👈 important
+
+  try {
+    const data = JSON.parse(text);
+    return data;
+  } catch (err) {
+    console.error("Invalid response from /me:", text);
+    throw new Error("Server returned invalid data");
+  }
 }
