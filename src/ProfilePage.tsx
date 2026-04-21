@@ -3,7 +3,7 @@ import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
 import { useRef, useEffect, useState } from "react";
-import { getMe, updateProfilePic } from "./api/auth";
+import { getMe, updateProfilePic ,updateProfileInfo} from "./api/auth";
 import { Grid, List, Edit } from "lucide-react";
 
 type AchievementItem = {
@@ -178,14 +178,6 @@ function MyAchievement() {
       </div>
     </>
   );
-}
-
-function ProfileNameChange() {
-  return;
-  <div className={profile.profileNameChange}>
-    <input type="text" placeholder="Enter new name" />
-    <button>Save</button>
-  </div>;
 }
 
 function ProfilePage() {

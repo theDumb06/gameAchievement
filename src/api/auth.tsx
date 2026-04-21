@@ -7,6 +7,11 @@ export interface RegisterData {
   file?: File;
 }
 
+export interface UserInformation {
+  username: string;
+  bio: string;
+}
+
 export async function registerUser(data: RegisterData) {
   const response = await fetch(
     "https://my-app-backend-8hja.onrender.com/register",
@@ -94,4 +99,20 @@ export async function updateProfilePic(file: File) {
   const data = await res.json();
   return data;
  
+}
+
+export async function updateProfileInfo(info: UserInformation) {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("https://my-app-backend-8hja.onrender.com/update-info", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(info),
+  });
+
+  const data = await res.json();
+  return data;
 }
