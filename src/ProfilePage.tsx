@@ -4,7 +4,7 @@ import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
 import { useRef, useEffect, useState } from "react";
 import { getMe, updateProfilePic } from "./api/auth";
-import { Grid, List } from "lucide-react";
+import { Grid, List, Edit } from "lucide-react";
 
 type AchievementItem = {
   id: number;
@@ -43,11 +43,18 @@ function ProfilePicture({ user }: { user: User }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string>(user.avatarUrl || heroImg);
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [formData, setFormData] = useState({
+  username: user.username,
+  bio: user.bio || "",
+});
+
   const handleClick = () => {
     fileInputRef.current?.click(); // trigger hidden input
   };
 
-  const handleFileChange = async  (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -64,8 +71,25 @@ function ProfilePicture({ user }: { user: User }) {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+const handleSave = async () => {
+  // call your API here
+  await updateProfileInfo(formData);
+
+  setIsEditing(false);
+};
+
   return (
     <div className={profile["profile-destails-container"]}>
+      <button className={profile.editButton} onClick={() => setIsEditing(true)}>
+        <Edit size={20} />
+      </button>
       <div className={profile["profile-picture"]} onClick={handleClick}>
         <input
           type="file"
@@ -77,9 +101,37 @@ function ProfilePicture({ user }: { user: User }) {
         <img src={image} alt="Profile" />
       </div>
       <div className={profile["profile-name"]}>
-        <h2>{user.username}</h2>
-        <span>{user.bio || "This is the player's bio"}</span>
+        {!isEditing ? (
+        <h2>
+          {user.username}
+        </h2>
+      ) : (
+        <input
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      )}
+         {/* BIO */}
+      {!isEditing ? (
+        <span>
+          {user.bio || "This is the player's bio"}
+        </span>
+      ) : (
+        <textarea
+          name="bio"
+          value={formData.bio}
+          onChange={handleChange}
+        />
+      )}
         <span>Level 42</span>
+
+        {isEditing && (
+        <div>
+          <button onClick={handleSave}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </div>
+      )}
       </div>
     </div>
   );
@@ -126,6 +178,14 @@ function MyAchievement() {
       </div>
     </>
   );
+}
+
+function ProfileNameChange() {
+  return;
+  <div className={profile.profileNameChange}>
+    <input type="text" placeholder="Enter new name" />
+    <button>Save</button>
+  </div>;
 }
 
 function ProfilePage() {
