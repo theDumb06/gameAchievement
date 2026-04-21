@@ -57,7 +57,7 @@ function ProfilePicture({ user }: { user: User }) {
 
     // upload to backend
     try {
-      const updatedUser = await updateProfilePic(file, user.username);
+      const updatedUser = await updateProfilePic(file);
       setImage(updatedUser.avatarUrl); // replace preview with real URL
     } catch (err) {
       console.error("Upload failed", err);
