@@ -78,11 +78,10 @@ export async function getMe() {
   }
 }
 
-export async function updateProfilePic(file: File, username: string) {
+export async function updateProfilePic(file: File) {
   const token = localStorage.getItem("token");
   const formData = new FormData();
   formData.append("file", file);        // MUST match upload.single("file")
-  formData.append("username", username);
 
   const res = await fetch("https://my-app-backend-8hja.onrender.com/update-profile", {
     method: "PUT",
