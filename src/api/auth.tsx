@@ -1,9 +1,10 @@
-// src/api/auth.ts
+
 
 export interface RegisterData {
   username: string;
   email: string;
   password: string;
+  file?: File;
 }
 
 export async function registerUser(data: RegisterData) {
@@ -75,4 +76,23 @@ export async function getMe() {
     console.error("Invalid response from /me:", text);
     throw new Error("Server returned invalid data");
   }
+}
+
+export async function updateProfilePic(file: File, username: string) {
+  const token = localStorage.getItem("token");
+  const formData = new FormData();
+  formData.append("file", file);        // MUST match upload.single("file")
+  formData.append("username", username);
+
+  const res = await fetch("https://my-app-backend-8hja.onrender.com/update-profile", {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+     body: formData,
+  });
+
+  const data = await res.json();
+  return data;
+ 
 }
