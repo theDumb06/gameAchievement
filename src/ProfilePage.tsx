@@ -3,7 +3,7 @@ import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
 import { useRef, useEffect, useState } from "react";
-import { getMe } from "./api/auth";
+import { getMe, updateProfilePic } from "./api/auth";
 import { Grid, List } from "lucide-react";
 
 type AchievementItem = {
@@ -47,12 +47,21 @@ function ProfilePicture({ user }: { user: User }) {
     fileInputRef.current?.click(); // trigger hidden input
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async  (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file); // preview
-    setImage(imageUrl);
+    // preview
+    const previewUrl = URL.createObjectURL(file);
+    setImage(previewUrl);
+
+    // upload to backend
+    try {
+      const updatedUser = await updateProfilePic(file, user.username);
+      setImage(updatedUser.avatarUrl); // replace preview with real URL
+    } catch (err) {
+      console.error("Upload failed", err);
+    }
   };
 
   return (
