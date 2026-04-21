@@ -3,7 +3,7 @@ import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
 import { useRef, useEffect, useState } from "react";
-import { getMe, updateProfilePic ,updateProfileInfo} from "./api/auth";
+import { getMe, updateProfilePic, updateProfileInfo } from "./api/auth";
 import { Grid, List, Edit } from "lucide-react";
 
 type AchievementItem = {
@@ -46,11 +46,12 @@ function ProfilePicture({ user }: { user: User }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const [formData, setFormData] = useState({
-  username: user.username,
-  bio: user.bio || "",
-});
+    username: user.username,
+    bio: user.bio || "",
+  });
 
   const handleClick = () => {
+    if (!isEditing) return; // disable upload when editing text
     fileInputRef.current?.click(); // trigger hidden input
   };
 
@@ -71,19 +72,21 @@ function ProfilePicture({ user }: { user: User }) {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  setFormData({
-    ...formData,
-    [e.target.name]: e.target.value,
-  });
-};
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-const handleSave = async () => {
-  // call your API here
-  await updateProfileInfo(formData);
+  const handleSave = async () => {
+    // call your API here
+    await updateProfileInfo(formData);
 
-  setIsEditing(false);
-};
+    setIsEditing(false);
+  };
 
   return (
     <div className={profile["profile-destails-container"]}>
@@ -102,36 +105,31 @@ const handleSave = async () => {
       </div>
       <div className={profile["profile-name"]}>
         {!isEditing ? (
-        <h2>
-          {user.username}
-        </h2>
-      ) : (
-        <input
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-      )}
-         {/* BIO */}
-      {!isEditing ? (
-        <span>
-          {user.bio || "This is the player's bio"}
-        </span>
-      ) : (
-        <textarea
-          name="bio"
-          value={formData.bio}
-          onChange={handleChange}
-        />
-      )}
-        <span>Level 42</span>
-
+          <h2>{user.username}</h2>
+        ) : (
+          <input
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+        )}
+        {/* BIO */}
+        {!isEditing ? (
+          <span>
+            {" "}
+            Bio:
+            {" " + (user.bio || "This is the player's bio")}
+          </span>
+        ) : (
+          <textarea name="bio" value={formData.bio} onChange={handleChange} />
+        )}
         {isEditing && (
-        <div>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
-        </div>
-      )}
+          <div>
+            <button onClick={handleSave}>Save</button>
+            <button onClick={() => setIsEditing(false)}>Cancel</button>
+          </div>
+        )}
+        {isEditing || <span>Level: 42</span>}
       </div>
     </div>
   );

@@ -19,6 +19,7 @@
   gap: 10px;
   margin: 20px; /* Adds space between the picture and the details */
   width: 100%;
+  align-items: center;
 }
 
 .profile-picture {
@@ -49,6 +50,7 @@ flex-direction: column;
   color:var(--text-color);
   font-size: 15px;
   margin: 0;
+  padding: 10px;
 }
 
 .profile-name h2 {
@@ -122,4 +124,25 @@ scrollbar-width: none;
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.profile-name input, textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin: 3px;
+  background-color: var(--header-color);
+}
+
+.profile-name button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  color: var(--text-color);
+  cursor: pointer;
+  margin: 3px;
+  background-color: var(--main-color);
 }
