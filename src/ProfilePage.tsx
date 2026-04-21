@@ -2,7 +2,7 @@ import profile from "./Profile.module.css";
 import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
 import Achievement from "./Achievement";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { getMe } from "./api/auth";
 import { Grid, List } from "lucide-react";
 
@@ -17,6 +17,7 @@ type User = {
   email: string;
   achievements: AchievementItem[];
   bio?: string;
+  avatarUrl?: string;
 };
 
 const achievements: AchievementItem[] = [
@@ -39,10 +40,32 @@ function ProfileBanner({ user }: { user: User }) {
 }
 
 function ProfilePicture({ user }: { user: User }) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<string>(user.avatarUrl || heroImg);
+
+  const handleClick = () => {
+    fileInputRef.current?.click(); // trigger hidden input
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file); // preview
+    setImage(imageUrl);
+  };
+
   return (
     <div className={profile["profile-destails-container"]}>
-      <div className={profile["profile-picture"]}>
-        <img src={heroImg} alt="Profile" />
+      <div className={profile["profile-picture"]} onClick={handleClick}>
+        <input
+          type="file"
+          className={profile["uploadInput"]}
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept="image/*"
+        />
+        <img src={image} alt="Profile" />
       </div>
       <div className={profile["profile-name"]}>
         <h2>{user.username}</h2>
