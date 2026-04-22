@@ -52,20 +52,51 @@ const achievements = [
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
 
+  type AchievementType = "OneTime" | "Progressive";
+
+  const [selected, setSelected] = useState<AchievementType>("OneTime");
+
+  const options: AchievementType[] = ["OneTime", "Progressive"];
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
   return (
-    <div className={achievementPage["search-bar"]}>
-      <input
-        type="text"
-        placeholder="Search achievements..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
-      <button className={achievementPage["search-bar-button"]}>Search</button>
-    </div>
+    <>
+      <div className={achievementPage.searchBarContainer}>
+        <div className={achievementPage["search-bar"]}>
+          <input
+            type="text"
+            placeholder="Search achievements..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <button className={achievementPage["search-bar-button"]}>
+            Search
+          </button>
+        </div>
+      </div>
+
+      <div className={achievementPage.addAchievementContainer}>
+        <input type="file" />
+        <input type="text" placeholder="Achievement Name" />
+        <input type="text" placeholder="Achievement Description" />
+
+        <select
+          value={selected}
+          onChange={(e) => setSelected(e.target.value as AchievementType)}
+        >
+          {options.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+
+        <button className={achievementPage["search-bar-button"]}>Add</button>
+      </div>
+    </>
   );
 }
 
@@ -130,10 +161,10 @@ function AchievementSwitch() {
 
   return (
     <div className={achievementPage["achievement-page"]}>
-      <div className={achievementPage.searchBarContainer}>
+      <div className={achievementPage.topBarContainer}>
         <SearchBar />
-        </div>
-      
+      </div>
+
       <div className={achievementPage["tab-container"]}>
         <button
           className={`${achievementPage["tab-button"]} ${activeTab === "myAchievements" ? achievementPage["active"] : ""}`}
@@ -141,8 +172,7 @@ function AchievementSwitch() {
             setActiveTab("myAchievements");
           }}
         >
-          <h4>MY ACHIEVEMENTS</h4> 
-          
+          <h4>MY ACHIEVEMENTS</h4>
         </button>
         <button
           className={`${achievementPage["tab-button"]} ${activeTab === "allAchievements" ? achievementPage["active"] : ""}`}
@@ -150,7 +180,7 @@ function AchievementSwitch() {
             setActiveTab("allAchievements");
           }}
         >
-          <h4>ALL ACHIEVEMENTS</h4> 
+          <h4>ALL ACHIEVEMENTS</h4>
         </button>
 
         <button
@@ -168,14 +198,13 @@ function AchievementSwitch() {
           )}
         </button>
       </div>
-      
-      
-          <div className={achievementPage["achievement-content"]}>
+
+      <div className={achievementPage["achievement-content"]}>
         <div className={achievementPage["scroll-content"]}>
-            {renderComponent()}
-          </div>
+          {renderComponent()}
         </div>
       </div>
+    </div>
   );
 }
 
