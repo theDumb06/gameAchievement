@@ -1,5 +1,3 @@
-
-
 export interface RegisterData {
   username: string;
   email: string;
@@ -43,7 +41,7 @@ export async function login(email: string, password: string) {
   });
 
   const text = await res.text();
-  
+
   let data;
 
   try {
@@ -68,8 +66,8 @@ export async function getMe() {
 
   const res = await fetch("https://my-app-backend-8hja.onrender.com/me", {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   const text = await res.text(); // 👈 important
@@ -86,33 +84,54 @@ export async function getMe() {
 export async function updateProfilePic(file: File) {
   const token = localStorage.getItem("token");
   const formData = new FormData();
-  formData.append("file", file);        // MUST match upload.single("file")
+  formData.append("file", file); // MUST match upload.single("file")
 
-  const res = await fetch("https://my-app-backend-8hja.onrender.com/update-profile", {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    "https://my-app-backend-8hja.onrender.com/update-profile",
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
     },
-     body: formData,
-  });
+  );
 
   const data = await res.json();
   return data;
- 
 }
 
 export async function updateProfileInfo(info: UserInformation) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("https://my-app-backend-8hja.onrender.com/update-info", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    "https://my-app-backend-8hja.onrender.com/update-info",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(info),
     },
-    body: JSON.stringify(info),
-  });
+  );
 
+  const data = await res.json();
+  return data;
+}
+
+export async function addAchievement(formData: FormData) {
+  const token = localStorage.getItem("token");
+  const res = await fetch(
+    "https://my-app-backend-8hja.onrender.com/add-achievements",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    },
+  );
   const data = await res.json();
   return data;
 }
