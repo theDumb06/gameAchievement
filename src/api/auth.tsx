@@ -135,3 +135,21 @@ export async function addAchievement(formData: FormData) {
   const data = await res.json();
   return data;
 }
+
+
+export async function addProgress(userId: string, achievementId: string, progress: number) {
+  const token = localStorage.getItem("token");
+  const res = await fetch(
+    "https://my-app-backend-8hja.onrender.com/add-progress",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ userId, achievementId, progress }),
+    },
+  );
+  const data = await res.json();
+  return data;
+}
