@@ -180,7 +180,8 @@ function MyAchievement() {
               title={ach.title}
               achievementURL={ach.achievementURL}
               description={ach.description}
-              total={ach.progress}
+              progress={ach.progress}
+              total={ach.targetValue}
             />
           ))}
         </div>

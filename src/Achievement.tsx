@@ -7,6 +7,7 @@ interface AchievementProps {
   achievementURL: string;
   description: string;
   total: number;
+  progress?: number;
 }
 
 function Achievement(achievementData: AchievementProps) {
@@ -40,7 +41,7 @@ function UserAchievement(achievementData: AchievementProps) {
       <img src={achievementData.achievementURL} alt={achievementData.title} />
       <h2>{achievementData.title}</h2>
       <p>{achievementData.description}</p>
-      <p>Progress: {achievementData.total}</p>
+      <p>Progress: {achievementData.progress}/{achievementData.total}</p>
     </div>
   );
 }

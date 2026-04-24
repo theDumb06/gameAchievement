@@ -6,7 +6,7 @@ import { addAchievement, getUserAchievements } from "./api/auth";
 import { getAchievements } from "./api/auth";
 
 
-function SearchBar() {
+function SearchBar(props: { onAdded: () => void }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [achievementName, setAchievementName] = useState("");
@@ -35,6 +35,7 @@ function SearchBar() {
 
     try {
       await addAchievement(formData);
+      props.onAdded();
       // Reset form fields
       setSelectedFile(null);
       setAchievementName("");
@@ -137,26 +138,15 @@ function MyAchievement(props: { viewMode: boolean }) {
           title={achievement.title}
           achievementURL={achievement.achievementURL}
           description={achievement.description}
-          total={achievement.progress}
+          progress={achievement.progress}
+          total={achievement.targetValue} 
         />
       ))}
     </div>
   );
 }
 
-function AchievementPage(props: { viewMode: boolean }) {
-  const [achievements, setAchievements] = useState<any[]>([]);
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        const data = await getAchievements();
-        setAchievements(data);
-      } catch (error) {
-        console.error("Error fetching achievements:", error);
-      }
-    };
-    fetchAchievements();
-  }, []);
+function AchievementPage(props: { viewMode: boolean; achievements: any[] }) {
 
   return (
     <div
@@ -164,7 +154,7 @@ function AchievementPage(props: { viewMode: boolean }) {
         props.viewMode ? achievement["grid-layout"] : achievement["list-layout"]
       }
     >
-      {achievements.map((achievement) => (
+      {props.achievements.map((achievement) => (
         <Achievement
           key={achievement._id}
           id={achievement._id}
@@ -179,6 +169,24 @@ function AchievementPage(props: { viewMode: boolean }) {
 }
 
 function AchievementSwitch() {
+
+  const [achievements, setAchievements] = useState<any[]>([]);
+
+  const fetchAchievements = async () => {
+      try {
+        const data = await getAchievements();
+        setAchievements(data);
+      } catch (error) {
+        console.error("Error fetching achievements:", error);
+      }
+    };
+
+  useEffect(() => {
+    fetchAchievements();
+  }, []);
+
+
+
   const [activeTab, setActiveTab] = useState("myAchievements");
 
   const [viewMode, setViewMode] = useState(true);
@@ -192,7 +200,7 @@ function AchievementSwitch() {
       case "myAchievements":
         return <MyAchievement viewMode={viewMode} />;
       case "allAchievements":
-        return <AchievementPage viewMode={viewMode} />;
+        return <AchievementPage viewMode={viewMode} achievements={achievements} />;
       default:
         return null;
     }
@@ -201,7 +209,7 @@ function AchievementSwitch() {
   return (
     <div className={achievementPage["achievement-page"]}>
       <div className={achievementPage.topBarContainer}>
-        <SearchBar />
+        <SearchBar onAdded={fetchAchievements} />
       </div>
 
       <div className={achievementPage["tab-container"]}>
