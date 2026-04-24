@@ -1,54 +1,10 @@
-import Achievement from "./Achievement";
+import { Achievement, UserAchievement } from "./Achievement";
 import achievementPage from "./AchievementPage.module.css";
 import achievement from "./Achievement.module.css";
-import { useState } from "react";
-import { addAchievement } from "./api/auth";
+import { useEffect, useState } from "react";
+import { addAchievement, getUserAchievements } from "./api/auth";
+import { getAchievements } from "./api/auth";
 
-const achievements = [
-  { id: 1, title: "First Win", description: "Won 1 match", completed: true },
-  {
-    id: 2,
-    title: "Speedster",
-    description: "Won in under 5 mins",
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Unstoppable",
-    description: "Won 10 matches in a row",
-    completed: false,
-  },
-  {
-    id: 4,
-    title: "Collector",
-    description: "Collected 100 items",
-    completed: false,
-  },
-  {
-    id: 5,
-    title: "Explorer",
-    description: "Visited all locations",
-    completed: true,
-  },
-  {
-    id: 6,
-    title: "Master",
-    description: "Reached max level",
-    completed: false,
-  },
-  {
-    id: 7,
-    title: "Strategist",
-    description: "Won with a unique strategy",
-    completed: false,
-  },
-  {
-    id: 8,
-    title: "Team Player",
-    description: "Won a team match",
-    completed: false,
-  },
-];
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -85,8 +41,10 @@ function SearchBar() {
       setAchievementDescription("");
       setTargetValue("");
       setSelected("OneTime");
+      alert("Achievement added successfully!");
     } catch (error) {
       console.error("Error adding achievement:", error);
+      alert("Failed to add achievement. Please try again.");
     }
   };
 
@@ -154,27 +112,52 @@ function SearchBar() {
 }
 
 function MyAchievement(props: { viewMode: boolean }) {
+  const [achievements, setAchievements] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        const data = await getUserAchievements();
+        setAchievements(data);
+      } catch (error) {
+        console.error("Error fetching achievements:", error);
+      }
+    };
+    fetchAchievements();
+  }, []);
   return (
     <div
       className={
         props.viewMode ? achievement["grid-layout"] : achievement["list-layout"]
       }
     >
-      {achievements
-        .filter((ach) => ach.completed)
-
-        .map((achievement) => (
-          <Achievement
-            key={achievement.id}
-            title={achievement.title}
-            description={achievement.description}
-          />
-        ))}
+      {achievements.map((achievement) => (
+        <UserAchievement
+          key={achievement.id}
+          id={achievement.id}
+          title={achievement.title}
+          achievementURL={achievement.achievementURL}
+          description={achievement.description}
+          total={achievement.progress}
+        />
+      ))}
     </div>
   );
 }
 
 function AchievementPage(props: { viewMode: boolean }) {
+  const [achievements, setAchievements] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        const data = await getAchievements();
+        setAchievements(data);
+      } catch (error) {
+        console.error("Error fetching achievements:", error);
+      }
+    };
+    fetchAchievements();
+  }, []);
+
   return (
     <div
       className={
@@ -183,9 +166,12 @@ function AchievementPage(props: { viewMode: boolean }) {
     >
       {achievements.map((achievement) => (
         <Achievement
-          key={achievement.id}
+          key={achievement._id}
+          id={achievement._id}
           title={achievement.title}
+          achievementURL={achievement.achievementURL}
           description={achievement.description}
+          total={achievement.targetValue}
         />
       ))}
     </div>

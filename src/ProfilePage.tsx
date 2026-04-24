@@ -1,9 +1,14 @@
 import profile from "./Profile.module.css";
 import achievement from "./Achievement.module.css";
 import heroImg from "./assets/react.svg";
-import Achievement from "./Achievement";
+import { UserAchievement } from "./Achievement";
 import { useRef, useEffect, useState } from "react";
-import { getMe, updateProfilePic, updateProfileInfo } from "./api/auth";
+import {
+  getMe,
+  updateProfilePic,
+  updateProfileInfo,
+  getUserAchievements,
+} from "./api/auth";
 import { Grid, List, Edit } from "lucide-react";
 
 type AchievementItem = {
@@ -19,17 +24,6 @@ type User = {
   bio?: string;
   avatarUrl?: string;
 };
-
-const achievements: AchievementItem[] = [
-  { id: 1, title: "First Win", description: "Won 1 match" },
-  { id: 2, title: "Speedster", description: "Won in under 5 mins" },
-  { id: 3, title: "Unstoppable", description: "Won 10 matches in a row" },
-  { id: 4, title: "Collector", description: "Collected 100 items" },
-  { id: 5, title: "Explorer", description: "Visited all locations" },
-  { id: 6, title: "Master", description: "Reached max level" },
-  { id: 7, title: "Strategist", description: "Won with a unique strategy" },
-  { id: 8, title: "Team Player", description: "Won a team match" },
-];
 
 function ProfileBanner({ user }: { user: User }) {
   return (
@@ -142,6 +136,20 @@ function MyAchievement() {
     setViewMode(!viewMode);
   };
 
+  const [achievements, setAchievements] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        const data = await getUserAchievements();
+        console.log("User Achievements:", data);
+        setAchievements(data);
+      } catch (error) {
+        console.error("Error fetching achievements:", error);
+      }
+    };
+    fetchAchievements();
+  }, []);
+
   return (
     <>
       <div className={profile["toggle-container"]}>
@@ -166,10 +174,13 @@ function MyAchievement() {
           }
         >
           {achievements.map((ach) => (
-            <Achievement
+            <UserAchievement
               key={ach.id}
+              id={ach.id}
               title={ach.title}
+              achievementURL={ach.achievementURL}
               description={ach.description}
+              total={ach.progress}
             />
           ))}
         </div>

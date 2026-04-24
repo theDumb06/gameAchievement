@@ -137,7 +137,7 @@ export async function addAchievement(formData: FormData) {
 }
 
 
-export async function addProgress(userId: string, achievementId: string, progress: number) {
+export async function addProgress(achievementId: string, progress: number) {
   const token = localStorage.getItem("token");
   const res = await fetch(
     "https://my-app-backend-8hja.onrender.com/add-user-achievement",
@@ -147,9 +147,48 @@ export async function addProgress(userId: string, achievementId: string, progres
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ userId, achievementId, progress }),
+      body: JSON.stringify({achievementId, progress }),
     },
   );
   const data = await res.json();
   return data;
+}
+
+
+export async function getAchievements() {
+
+  const res = await fetch(
+    "https://my-app-backend-8hja.onrender.com/achievements",
+    {
+     headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (!res.ok) {
+    const text = await res.text(); // helps debug
+    throw new Error(`Error ${res.status}: ${text}`);
+  }
+
+  return res.json();
+}
+
+
+export async function getUserAchievements() {
+const token = localStorage.getItem("token");
+  const res = await fetch(
+    "https://my-app-backend-8hja.onrender.com/user-achievements",
+    {
+     headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    const text = await res.text(); // helps debug
+    throw new Error(`Error ${res.status}: ${text}`);
+  }
+
+  return res.json();
 }
