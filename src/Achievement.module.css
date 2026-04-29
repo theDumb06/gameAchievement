@@ -1,12 +1,12 @@
 .achievement {
-  background-color: var(--background-component-color1 );
+  background-color: var(--background-component-color1);
   border-radius: 10px;
   padding: 20px;
   margin: 0px 0px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--text-color)
+  color: var(--text-color);
 }
 
 .achievement img {
@@ -48,5 +48,26 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
 
+.progressBar {
+  background-color: var(--background-component-color);
+  border-radius: 10px;
+  height: 20px;
+  margin: 10px;
+}
+
+.progressBar .progressFill {
+  background-color: var(--main-color);
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.progressBar .progressText {
+  color: var(--text-color);
+  font-size: 12px;
 }

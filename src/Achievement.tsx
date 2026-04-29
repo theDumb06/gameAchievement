@@ -36,12 +36,33 @@ function Achievement(achievementData: AchievementProps) {
 
 function UserAchievement(achievementData: AchievementProps) {
   console.log("Achievement URL: " + achievementData.title);
+  interface NativeProgressProps {
+    value: number; // Current value
+    max?: number; // Total value, defaults to 1
+  }
+
+  const NativeProgressBar = ({ value, max = 100 }: NativeProgressProps) => {
+    const percentage = (value / max) * 100;
+    return (
+      <div className={styles.progressBar} style={{ width: "100%" }}>
+        <div className={styles.progressFill} style={{ width: `${percentage > 100 ? 100 : percentage}%` }}>
+          <p className={styles.progressText}>{`${value}/${max}`}</p>
+        </div>
+        
+      </div>
+    );
+  };
+
   return (
     <div className={styles.achievement}>
       <img src={achievementData.achievementURL} alt={achievementData.title} />
       <h2>{achievementData.title}</h2>
       <p>{achievementData.description}</p>
-      <p>Progress: {achievementData.progress}/{achievementData.total}</p>
+
+      <NativeProgressBar
+        value={achievementData.progress || 0}
+        max={achievementData.total}
+      />
     </div>
   );
 }
