@@ -28,6 +28,11 @@
   color: var(--text-color);
   cursor: pointer;
 }
+
+.achievement button:hover {
+  background-color: var(--header-color);
+
+}
 .achievement-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -4,10 +4,33 @@ import achievement from "./Achievement.module.css";
 import { useEffect, useState } from "react";
 import { addAchievement, getUserAchievements } from "./api/auth";
 import { getAchievements } from "./api/auth";
+import { Grid, List } from "lucide-react";
 
-
-function SearchBar(props: { onAdded: () => void }) {
+function SearchBar({ onSearch }: { onSearch: (value: string) => void }) {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    onSearch(value); // 🔥 send to parent
+  };
+
+  return (
+    <div className={achievementPage.searchBarContainer}>
+      <div className={achievementPage["search-bar"]}>
+        <input
+          type="text"
+          placeholder="Search achievements..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+        <button onClick={() => onSearch(searchTerm)}>Search</button>
+      </div>
+    </div>
+  );
+}
+
+function AddAchievement(props: { onAdded: () => void }) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [achievementName, setAchievementName] = useState("");
   const [achievementDescription, setAchievementDescription] = useState("");
@@ -18,10 +41,6 @@ function SearchBar(props: { onAdded: () => void }) {
   const [selected, setSelected] = useState<AchievementType>("OneTime");
 
   const options: AchievementType[] = ["OneTime", "Progressive"];
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
 
   const handleSubmit = async () => {
     console.log("Submitting achievement:");
@@ -48,71 +67,54 @@ function SearchBar(props: { onAdded: () => void }) {
       alert("Failed to add achievement. Please try again.");
     }
   };
-
   return (
-    <>
-      <div className={achievementPage.searchBarContainer}>
-        <div className={achievementPage["search-bar"]}>
-          <input
-            type="text"
-            placeholder="Search achievements..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          <button className={achievementPage["search-bar-button"]}>
-            Search
-          </button>
-        </div>
-      </div>
+    <div className={achievementPage.addAchievementContainer}>
+      <input
+        type="file"
+        onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+      />
+      <input
+        type="text"
+        placeholder="Achievement Name"
+        value={achievementName}
+        onChange={(e) => setAchievementName(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Achievement Description"
+        value={achievementDescription}
+        onChange={(e) => setAchievementDescription(e.target.value)}
+      />
 
-      <div className={achievementPage.addAchievementContainer}>
-        <input
-          type="file"
-          onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-        />
-        <input
-          type="text"
-          placeholder="Achievement Name"
-          value={achievementName}
-          onChange={(e) => setAchievementName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Achievement Description"
-          value={achievementDescription}
-          onChange={(e) => setAchievementDescription(e.target.value)}
-        />
+      <select
+        value={selected}
+        onChange={(e) => setSelected(e.target.value as AchievementType)}
+      >
+        {options.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
+      </select>
+      <input
+        type="number"
+        placeholder="Target Value"
+        value={selected === "OneTime" ? 1 : targetValue}
+        onChange={(e) => setTargetValue(e.target.value)}
+        disabled={selected === "OneTime"}
+      />
 
-        <select
-          value={selected}
-          onChange={(e) => setSelected(e.target.value as AchievementType)}
-        >
-          {options.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          placeholder="Target Value"
-          value={selected === "OneTime" ? 1 : targetValue}
-          onChange={(e) => setTargetValue(e.target.value)}
-          disabled={selected === "OneTime"}
-        />
-
-        <button
-          className={achievementPage["search-bar-button"]}
-          onClick={handleSubmit}
-        >
-          Add
-        </button>
-      </div>
-    </>
+      <button
+        className={achievementPage["search-bar-button"]}
+        onClick={handleSubmit}
+      >
+        Add
+      </button>
+    </div>
   );
 }
 
-function MyAchievement(props: { viewMode: boolean }) {
+function MyAchievement(props: { viewMode: boolean; searchTerm: string }) {
   const [achievements, setAchievements] = useState<any[]>([]);
   useEffect(() => {
     const fetchAchievements = async () => {
@@ -131,7 +133,12 @@ function MyAchievement(props: { viewMode: boolean }) {
         props.viewMode ? achievement["grid-layout"] : achievement["list-layout"]
       }
     >
-      {achievements.map((achievement) => (
+      {achievements
+      
+      .filter((achievement) =>
+        achievement.title.toLowerCase().includes(props.searchTerm.toLowerCase())
+      )
+      .map((achievement) => (
         <UserAchievement
           key={achievement.id}
           id={achievement.id}
@@ -139,22 +146,25 @@ function MyAchievement(props: { viewMode: boolean }) {
           achievementURL={achievement.achievementURL}
           description={achievement.description}
           progress={achievement.progress}
-          total={achievement.targetValue} 
+          total={achievement.targetValue}
         />
       ))}
     </div>
   );
 }
 
-function AchievementPage(props: { viewMode: boolean; achievements: any[] }) {
-
+function AchievementPage(props: { viewMode: boolean; achievements: any[];  searchTerm: string;}) {
   return (
     <div
       className={
         props.viewMode ? achievement["grid-layout"] : achievement["list-layout"]
       }
     >
-      {props.achievements.map((achievement) => (
+      {props.achievements
+      .filter((achievement) =>
+        achievement.title.toLowerCase().includes(props.searchTerm.toLowerCase())
+      )
+      .map((achievement) => (
         <Achievement
           key={achievement._id}
           id={achievement._id}
@@ -169,23 +179,21 @@ function AchievementPage(props: { viewMode: boolean; achievements: any[] }) {
 }
 
 function AchievementSwitch() {
-
   const [achievements, setAchievements] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchAchievements = async () => {
-      try {
-        const data = await getAchievements();
-        setAchievements(data);
-      } catch (error) {
-        console.error("Error fetching achievements:", error);
-      }
-    };
+    try {
+      const data = await getAchievements();
+      setAchievements(data);
+    } catch (error) {
+      console.error("Error fetching achievements:", error);
+    }
+  };
 
   useEffect(() => {
     fetchAchievements();
   }, []);
-
-
 
   const [activeTab, setActiveTab] = useState("myAchievements");
 
@@ -198,9 +206,11 @@ function AchievementSwitch() {
   const renderComponent = () => {
     switch (activeTab) {
       case "myAchievements":
-        return <MyAchievement viewMode={viewMode} />;
+        return <MyAchievement viewMode={viewMode} searchTerm={searchTerm} />;
       case "allAchievements":
-        return <AchievementPage viewMode={viewMode} achievements={achievements} />;
+        return (
+          <AchievementPage viewMode={viewMode} achievements={achievements} searchTerm={searchTerm} />
+        );
       default:
         return null;
     }
@@ -209,7 +219,8 @@ function AchievementSwitch() {
   return (
     <div className={achievementPage["achievement-page"]}>
       <div className={achievementPage.topBarContainer}>
-        <SearchBar onAdded={fetchAchievements} />
+        <SearchBar onSearch={setSearchTerm} />
+        <AddAchievement onAdded={fetchAchievements} />
       </div>
 
       <div className={achievementPage["tab-container"]}>
@@ -236,10 +247,12 @@ function AchievementSwitch() {
         >
           {viewMode ? (
             <>
+            <List size={20} />
               <span>List View</span>
             </>
           ) : (
             <>
+            <Grid size={20} />
               <span>Grid View</span>
             </>
           )}

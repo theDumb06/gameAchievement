@@ -63,6 +63,11 @@
   margin: 0;
 }
 
+.addAchievementContainer button:hover {
+  background-color: var(--header-color);
+
+}
+
 .searchBarContainer {
   display: flex;
   flex: 1;
@@ -85,7 +90,7 @@
   border-radius: 5px;
   background-color: var(--background-component-color1);
 }
-.search-bar-button {
+.search-bar button {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
@@ -94,6 +99,11 @@
   cursor: pointer;
   margin: 0;
   background-color: var(--main-color);
+}
+
+.search-bar button:hover {
+  background-color: var(--header-color);
+
 }
 
 .tab-container {
@@ -125,8 +135,7 @@
 }
 
 .tab-container button:hover {
-  border: none;
-  padding: 10px 20px;
+  background-color: var(--background-component-color);
 }
 
 .toggle-button {

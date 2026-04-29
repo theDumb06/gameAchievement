@@ -16,11 +16,13 @@ function ColumnName() {
   );
 }
 
-function SearchBar() {
+function SearchBar({ onSearch }: { onSearch: (value: string) => void }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    const value = event.target.value;
+    setSearchTerm(value);
+    onSearch(value); // 🔥 send to parent
   };
 
   return (
@@ -37,10 +39,12 @@ function SearchBar() {
 }
 
 function Leaderboard() {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div className={LeaderboardStyle.leaderboardContainer}>
       <div className={LeaderboardStyle.searchBarContainer}>
-        <SearchBar />
+        <SearchBar onSearch={setSearchTerm} />
       </div>
       <div className={LeaderboardStyle.container}>
         <ColumnName />

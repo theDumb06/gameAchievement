@@ -16,7 +16,7 @@ function Achievement(achievementData: AchievementProps) {
     try {
       console.log("Sending progress...");
       const res = await addProgress(achievementData.id, 1);
-      alert("Progress added!");
+      alert(res.message);
       console.log("Progress added:", res);
     } catch (error) {
       alert("Failed to add progress. Please try again.");
@@ -46,7 +46,7 @@ function UserAchievement(achievementData: AchievementProps) {
     return (
       <div className={styles.progressBar} style={{ width: "100%" }}>
         <div className={styles.progressFill} style={{ width: `${percentage > 100 ? 100 : percentage}%` }}>
-          <p className={styles.progressText}>{`${value}/${max}`}</p>
+          <p className={styles.progressText}>{percentage >= 100 ? `Completed` : `${value}/${max}`}</p>
         </div>
         
       </div>
